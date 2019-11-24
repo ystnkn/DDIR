@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codeBook version="2.5" ID="123" xmlns="http://www.icpsr.umich.edu/DDI">
+  <docDscr>
+    <citation>
+      <titlStmt>
+        <titl>Sample Survey Research 2018</titl>
+      </titlStmt>
+      <prodStmt>
+        <prodDate date="2018-12-01 10:22:25">2018-12-01 10:22:25</prodDate>
+        <software version=""/>
+      </prodStmt>
+    </citation>
+  </docDscr>
+  <stdyDscr>
+    <citation>
+      <titlStmt>
+        <titl>Sample Survey Research 2018</titl>
+      </titlStmt>
+      <prodStmt/>
+    </citation>
+  </stdyDscr>
+  <fileDscr ID="123">
+    <fileTxt>
+      <fileName>sampledata.csv</fileName>
+      <dimensns>
+        <caseQnty>50</caseQnty>
+        <varQnty>3</varQnty>
+      </dimensns>
+      <fileType>CSV</fileType>
+    </fileTxt>
+  </fileDscr>
+  <dataDscr>
+    <var ID="Q1" name="age" dcml="0">
+      <location width="2" StartPos="1" EndPos="2"/>
+      <qstn>
+        <qstnLit>How old are you now?</qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" formatname="F">F2.0</varFormat>
+    </var>
+    <var ID="Q2" name="usage" dcml="0">
+      <location width="1" StartPos="3" EndPos="3"/>
+      <qstn>
+        <qstnLit>Do you use DDI??
+          1 yes
+          2 no</qstnLit>
+      </qstn>
+      <catgry><catValu>1</catValu><labl>yes</labl></catgry><catgry><catValu>2</catValu><labl>no</labl></catgry>
+      <varFormat type="numeric" schema="other" formatname="F">F1.0</varFormat>
+    </var>
+    <var ID="Q3" name="幸福度">
+      <qstn>
+        <qstnLit>あなたは自分のことをしあわせせだと思いますか。
+          1 しあわせではない
+          2 あまりしあわせではない
+          3 どちらともいえない
+          4 少しはしあわせだ
+          5 しあわせだ</qstnLit>
+      </qstn>
+<catgry><catValu>1</catValu><labl>'しあわせではない'</labl></catgry><catgry><catValu>2</catValu><labl>'あまりしあわせではない'</labl></catgry><catgry><catValu>3</catValu><labl>'どちらともいえない'</labl></catgry><catgry><catValu>4</catValu><labl>'少しはしあわせだ'</labl></catgry><catgry><catValu>5</catValu><labl>'しあわせだ'</labl>
+</catgry>
+    </var>
+  </dataDscr>
+</codeBook>

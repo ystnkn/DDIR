@@ -1,0 +1,93 @@
+#' Import meta data from a ddi xml file, and combine its informations with raw csv data file as a dataframe
+#' @importFrom magrittr %>%
+#' @importFrom stats setNames
+#' @importFrom purrr map2_dfc
+#' @importFrom purrr map
+#' @importFrom purrr modify_if
+#' @importFrom dplyr quo_name
+#' @importFrom dplyr enquo
+#' @export
+
+read.codebook <- function(x,y){
+readr::read_csv(y, col_names=FALSE) %>%  
+  ## setting variable names
+  setNames(xml2::read_xml(x) %>%
+           xml2::xml_ns_strip() %>%
+           xml2::xml_find_all("//dataDscr//var") %>%
+           xml2::xml_attr(.,'ID')) %>%
+  ## getting category information
+  map2_dfc(.,(
+    xml2::read_xml(x) %>%
+    xml2::xml_ns_strip() %>%
+    xml2::xml_find_all("//dataDscr//var")%>%
+    map(~{      
+      labl <- ifelse(xml2::xml_find_lgl(., "boolean(.//catgry)"),
+      (xml2::xml_find_all(., ".//catgry//labl//text()") %>%
+       enframe() %>%
+       mutate(value=as.character(value)) %>%
+       select(value)),
+      NA) %>% setNames('labl')
+      catValu <- ifelse(xml2::xml_find_lgl(., "boolean(.//catgry)"),
+      (xml2::xml_find_all(., ".//catgry//catValu//text()") %>%
+       enframe() %>%
+       mutate(value=as.character(value)) %>%
+       select(value)),
+      NA) %>% setNames('catValu')
+      cbind.data.frame(catValu,labl) %>% set_tidy_names() %>% as_tibble()
+    })),
+    ~{structure(.x,catgry=.y)}
+    ) %>%
+  ## converting categorical variable as factor
+  modify_if(.,unlist(map(.,~(!anyNA(attr(.,'catgry'))))),~{
+    attributes(.) -> atts
+    factor(.,labels=attr(.,'catgry')$labl,levels=attr(.,'catgry')$catValu)
+  }) %>% 
+  ## setting category information as attributes
+  map2_dfc(.,(
+    xml2::read_xml(x) %>%
+    xml2::xml_ns_strip() %>%
+    xml2::xml_find_all("//dataDscr//var")%>%
+    map(~{      
+      labl <- ifelse(xml2::xml_find_lgl(., "boolean(.//catgry)"),
+      (xml2::xml_find_all(., ".//catgry//labl//text()") %>%
+       enframe() %>%
+       mutate(value=as.character(value)) %>%
+       select(value)),
+      NA) %>% setNames('labl')
+      catValu <- ifelse(xml2::xml_find_lgl(., "boolean(.//catgry)"),
+      (xml2::xml_find_all(., ".//catgry//catValu//text()") %>%
+       enframe() %>%
+       mutate(value=as.character(value)) %>%
+       select(value)),
+      NA) %>% setNames('catValu')
+      cbind.data.frame(catValu,labl) %>% set_tidy_names() %>% as_tibble()
+    })),
+    ~{structure(.x,catgry=.y)}
+    ) %>% 
+  ## setting var name information as attributes
+  map2_dfc(.,(
+    xml2::read_xml(x) %>%
+    xml2::xml_ns_strip() %>%
+    xml2::xml_find_all("//dataDscr//var") %>%
+    xml2::xml_attr(.,'name'))
+   ,~{structure(.x,varlabel=.y)}    
+    ) %>%
+  ## setting var qstn information as attributes
+  map2_dfc(.,(
+    xml2::read_xml(x) %>%
+    xml2::xml_ns_strip() %>%
+    xml2::xml_find_all("//dataDscr//var//qstn//text()") %>%
+    xml2::as_list()%>%
+    unlist())
+ ,~{structure(.x,qstn=.y)}
+   ) %>%
+  structure(
+    title = xml2::read_xml(x) %>%
+      xml2::xml_ns_strip() %>%
+      xml2::xml_find_all("//stdyDscr//citation//titlStmt//text()") %>%
+      xml2::as_list()%>%
+      unlist()
+   )
+
+}
+

@@ -1,0 +1,5 @@
+﻿title,data.file.name,ddi.file.name,var.ID,var.name,var.qstnLit,var.catgry.catValu,var.catgry.labl
+sample survey data to make DDI meta data,sampledata.data.2mkDDI.csv,sampledata.DDI.2mkDDI.xml,Q1,age,How old are you now?,,
+,,,Q2,usage,Do you use DDI?\n1 yes\n2 no,"1,2","'yes','no'"
+,,,Q3,幸福度,あなたは自分のことをしあわせせだと思いますか。\n1 しあわせでない \n2 あまりしあわせでない \n3 どちらともいえない \n4 少しはしあわせだ \n5 しあわせだ,"1,2,3,4,5","'しあわせではない','あまりしあわせではない','どちらともいえない','少しはしあわせだ','しあわせだ'"
+,,,Q4,class,What is your befitting social status?\n1 Upper class\n2 Upper-middle class\n3 Middle-class\n4 Lower-middle class\n5 Lower class,"1,2,3,4,5","'Upper class','Upper-middle class','Middle-class','Lower-middle class','Lower class'"

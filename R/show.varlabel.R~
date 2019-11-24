@@ -1,0 +1,28 @@
+#' Show label information of a variable
+#'
+#' @param data a data frame object created with read.codebook()
+#' @param var.name single text object of a varialbe name (could be non-quoted)
+#'
+#' @return This function returns a label of a variable, which are retrieved from '//dataDscr//var@name' in a ddi meta data file. 
+#'
+#' @examples
+#' \dontrun{
+#' ddi.file.url  <- './foo.ddi.xml'
+#' data.file.url <- './bar.csv'
+#'
+#' read.codebook(ddi.file.url, data.file.url) -> dataset
+#' head(dataset)
+#' dataset %>% show.varlabel(Q2)
+#' dataset %>% show.varlabel('Q2')
+#' show.question(data,'Q2')
+#' show.question(data$Q2)
+#' }
+#' 
+#' @export
+show.varlabel <- function(data=data, var.name=var.name){
+  ifelse(missing(var.name),
+         attr(data,'varlabel'),
+         data[[quo_name(enquo(var.name))]] %>% attr('varlabel')
+         )
+}
+
