@@ -18,7 +18,7 @@ readr::read_csv(data.file.url)
 
 ### example of read.codebook()
 #### combining a DDI metadata and a csv data to generate a tibble object
-read.codebook(ddi.file.url, data.file.url) -> dataset
+read_codebook(ddi.file.url, data.file.url) -> dataset
 head(dataset)
 
 ### checking contents of dataframe
@@ -29,19 +29,19 @@ names(sample.df)
 attributes(sample.df)
 
 ## function show.question()
-sample.df %>% show.question(Q1)
-sample.df %>% show.question(Q2)
-sample.df %>% show.question(Q3)
+sample.df %>% show_question(Q1)
+sample.df %>% show_question(Q2)
+sample.df %>% show_question(Q3)
 
 ## function show.varlabel()
-sample.df %>% show.varlabel(Q1)
-sample.df %>% show.varlabel(Q2)
-sample.df %>% show.varlabel(Q3)
+sample.df %>% show_varlabel(Q1)
+sample.df %>% show_varlabel(Q2)
+sample.df %>% show_varlabel(Q3)
 
 ## function show.valuelabel()
-sample.df %>% show.valuelabel(Q1)
-sample.df %>% show.valuelabel(Q2)
-sample.df %>% show.valuelabel(Q3)
+sample.df %>% show_valuelabel(Q1)
+sample.df %>% show_valuelabel(Q2)
+sample.df %>% show_valuelabel(Q3)
 
 
 
@@ -65,7 +65,7 @@ head(meta)
 names(meta)
 
 ## generating a DDI xml object
-mkDDI.metadata(title              = unlist(meta[,1]%>%na.omit()),
+mkDDI_metadata(title              = unlist(meta[,1]%>%na.omit()),
                data.file.name     = unlist(meta[,2]%>%na.omit()),
                var.ID             = unlist(meta[,4]),
                var.name           = unlist(meta[,5]),
